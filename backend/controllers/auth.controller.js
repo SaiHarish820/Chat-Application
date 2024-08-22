@@ -22,8 +22,8 @@ export const signup = async (req,res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
     
         // https://avatar-placeholder.iran.liara.run/
-        const boyProfilePic = `https://avatar-placeholder.iran.liara.run/${username}`;
-        const girlProfilePic = `https://avatar-placeholder.iran.liara.run/${username}`;
+		const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
+		const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
     
         const newUser = new User({
             fullName,
@@ -40,7 +40,7 @@ export const signup = async (req,res) => {
         await newUser.save();
 
         res.status(201).json({
-            _id: newUser.id,
+            _id: newUser._id,
             fullName: newUser.fullName,
             username: newUser.username,
             password: newUser.password,
@@ -57,32 +57,28 @@ export const signup = async (req,res) => {
     
 };
 
-export const login = async (req,res) => {
-   try{
-        const {username, password} = req.body;
-        const user = await User.findOne({username});
-        const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
+export const login = async (req, res) => {
+	try {
+		const { username, password } = req.body;
+		const user = await User.findOne({ username });
+		const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
 
-        if(!user || !isPasswordCorrect){
-            res.status(400).json({error: "Invalid username or password"});
-        }
+		if (!user || !isPasswordCorrect) {
+			return res.status(400).json({ error: "Invalid username or password" });
+		}
 
-        generateTokenAndSetCookie(user._id, res);
+		generateTokenAndSetCookie(user._id, res);
 
-        res.status(201).json({
-            _id: user.id,
-            fullName: user.fullName,
-            username: user.username,
-            password: user.password,
-            profilePic: user.profilePic,
-        });
-        console.log("Login Successful");
-
-   }
-   catch(error){
-    console.log("Error in login controller", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
-   }
+		res.status(200).json({
+			_id: user._id,
+			fullName: user.fullName,
+			username: user.username,
+			profilePic: user.profilePic,
+		});
+	} catch (error) {
+		console.log("Error in login controller", error.message);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
 };
 
 export const logout = (req,res) => {
