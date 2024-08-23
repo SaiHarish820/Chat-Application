@@ -3,11 +3,14 @@ import useConversation from "../../zustand/useConversation";
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
+import { useAuthContext } from "../../context/AuthContext";
 
 
  const MessageContainer = () => {
 
   const {selectedConversation, setSelectedConversation} = useConversation();
+  const {authUser} = useAuthContext();
+  const displayName = selectedConversation && authUser._id === selectedConversation._id ? "You" : selectedConversation?.fullName;
 
 	useEffect( ()=> {
 		//cleanup function(unmounts)
@@ -23,7 +26,7 @@ import { TiMessages } from "react-icons/ti";
                 <>
  				{/* Header */}
  				<div className='bg-slate-500 px-4 py-2 mb-2'>
-                 <span className='label-text'>To:</span> <span className='text-gray-900 font-bold'>{selectedConversation.fullName}</span>
+                 <span className='label-text'>To:</span> <span className='text-gray-900 font-bold'>{displayName}</span>
              </div>
              <Messages />
              <MessageInput/>
