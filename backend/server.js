@@ -10,6 +10,8 @@ import messageRoutes from "./routes/message.route.js";
 import connectToMongoDb from "./db/connectToMongoDB.js";
 
 const PORT = process.env.PORT || 5000;
+
+
 const __dirname = path.resolve();
 
 dotenv.config();
@@ -26,7 +28,7 @@ app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-})
+});
 
 server.listen(PORT, () => {
     connectToMongoDb();
