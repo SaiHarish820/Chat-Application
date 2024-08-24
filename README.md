@@ -74,7 +74,7 @@ This project is a real-time chat application built using the MERN stack (MongoDB
 
 This application can be deployed for free using services like Heroku, Render, Vercel, or Netlify.
 
-[Link Text](https://chat-application-ctoy.onrender.com/)
+[Deployment Link](https://chat-application-ctoy.onrender.com/)
 
 ## Tech Stack
 
