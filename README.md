@@ -88,4 +88,4 @@ This application can be deployed for free using services like Heroku, Render, Ve
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the GNU GENERAL PUBLIC LICENSE.
